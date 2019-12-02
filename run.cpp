@@ -1,4 +1,4 @@
-#include <cstring>              // strchr, strcmp
+#include <cstring>
 #include "src/processor.hpp"
 
 
