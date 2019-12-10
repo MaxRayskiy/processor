@@ -1,14 +1,18 @@
-#ifndef PROCESSOR_HPP
-#define PROCESSOR_HPP
+#pragma once
+
+#include "commands.inl"
+#include "../tmp/processor.inl"
+#include "../tmp/processor_execute_command.gen.inl"
+
 
 #include <cstdio>
 #include <cmath>
 #include <limits>
 #include <fstream>
 #include "text.hpp"
-#include "assembly_reader.hpp"
-#include "command.gen.hpp"
-#include "disassembler.hpp"
+#include "../tmp/assembly_reader.hpp"
+#include "../tmp/command.gen.hpp"
+#include "../src/disassembler.hpp"
 #include "args.hpp"
 
 void Run(FILE* assembled, FILE* listing);
@@ -52,25 +56,16 @@ class Processor {
     bool OF;
 
   public:
-
     Processor();
     ~Processor();
 
     void LoadProgram(FILE* assembled);
     void Execute(FILE* listing = nullptr);
 
-  private:
-
-    #include "commands.txt"
-
-
+ private:
     void PrintArgValue(FILE* listing, uint64_t arg, int arg_type);
     void PrintToListing(FILE* listing, Command& command,
                         uint64_t left_arg, uint64_t right_arg, char* pc);
 };
 
-#include "processor.inl"
-#include "processor_execute_command.gen.inl"
-
-#endif // PROCESSOR_HPP
 

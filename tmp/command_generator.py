@@ -174,7 +174,7 @@ def fill_commands(commands, input_file):
 
 if __name__ == "__main__":
     commands = dict()
-    with open("src/commands.txt", 'r') as input_file:
+    with open("src/commands.inl", 'r') as input_file:
         fill_commands(commands, input_file)
     convert_to_enum(commands)
     with open("src/command.gen.hpp", 'w') as output_file:
@@ -185,4 +185,3 @@ if __name__ == "__main__":
     with open("src/processor_execute_command.gen.inl", 'w') as output_file:
         write_execute_command(commands, output_file)
         output_file.write('\n')
-
