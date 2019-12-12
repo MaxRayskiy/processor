@@ -35,6 +35,6 @@ static bool IsFtregArg(const std::string& word) {
 }
 
 static bool IsRegArg(const std::string& word) {
-  return (map1.find(word) != map1.end());
+  return (map_r.find(word) != map_r.end());
 }
 

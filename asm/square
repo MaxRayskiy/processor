@@ -23,65 +23,41 @@ jz one_root
 jg two_roots
 
 no_roots:
-fmov xmm3 65.
-fout xmm3
 jmp end
 
 one_root:
-fmul xmm1 -1.
-fdiv xmm1 xmm0
-fmov xmm2 2.
-fdiv xmm1 xmm2
-push xmm1
-out
+fmov xmm3 xmm1
+fmul xmm3 -1.
+fdiv xmm3 xmm0 // -b/a
+fdiv xmm3 2.  // -b/2a
+fout xmm3
 jmp end
 
 two_roots:
-fsqrt xmm2
+fsqrt xmm2  // sqrt D
 fmov xmm3 xmm1
-fmul xmm3 -1.
-fadd xmm3 xmm2
-push xmm2
-fmov xmm2 2.
-fdiv xmm3 xmm2
+fmul xmm3 -1.  // -b
+fadd xmm3 xmm2  // -b + sqrtD
+fdiv xmm3 2.
 fdiv xmm3 xmm0
-push xmm3
-out
-pop xmm3
-push 10
-out
-pop eax
-pop xmm2
+fout xmm3
+
 fmov xmm3 xmm1
 fmul xmm3 -1.
 fsub xmm3 xmm2
 fmov xmm2 2.
 fdiv xmm3 xmm2
 fdiv xmm3 xmm0
-push xmm3
-out
+fout xmm3
 jmp end
 
 zero_a:
-fcmp xmm1 xmm3
-jz zero_b
-fmov xmm3 -1.
-fmul xmm2 xmm3
-fdiv xmm2 xmm1
-push xmm2
-out
-jmp end
-
-zero_b:
-fcmp xmm2 xmm3
-jz zero_c
-push 66
-out
-jmp end
-
-zero_c:
-push 67
-out
+fcmp xmm1 0.
+jz end
+fmov xmm3 xmm2
+fmul xmm3 -1.
+fdiv xmm3 xmm1
+fout xmm3
 jmp end
 
 end:

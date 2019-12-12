@@ -48,7 +48,7 @@ case 0x32: {
 }
 case 0x33: {
     xmm_t arg1 = instr.lhv;
-    ftnum_t arg2 = instr.lhv;
+    ftnum_t arg2 = instr.rhv;
     fmov(state, arg1, arg2);
     break;
 }
@@ -104,7 +104,7 @@ case 0x82: {
 }
 case 0x83: {
     xmm_t arg1 = instr.lhv;
-    ftnum_t arg2 = instr.lhv;
+    ftnum_t arg2 = instr.rhv;
     fcmp(state, arg1, arg2);
     break;
 }
@@ -128,7 +128,7 @@ case 0x42: {
 }
 case 0x43: {
     xmm_t arg1 = instr.lhv;
-    ftnum_t arg2 = instr.lhv;
+    ftnum_t arg2 = instr.rhv;
     fadd(state, arg1, arg2);
     break;
 }
@@ -152,7 +152,7 @@ case 0xA2: {
 }
 case 0xA3: {
     xmm_t arg1 = instr.lhv;
-    ftnum_t arg2 = instr.lhv;
+    ftnum_t arg2 = instr.rhv;
     fsub(state, arg1, arg2);
     break;
 }
@@ -176,13 +176,13 @@ case 0x52: {
 }
 case 0x53: {
     xmm_t arg1 = instr.lhv;
-    ftnum_t arg2 = instr.lhv;
+    ftnum_t arg2 = instr.rhv;
     fmul(state, arg1, arg2);
     break;
 }
 case 0xC1: {
     xmm_t arg1 = instr.lhv;
-    ftnum_t arg2 = instr.lhv;
+    ftnum_t arg2 = instr.rhv;
     fdiv(state, arg1, arg2);
     break;
 }

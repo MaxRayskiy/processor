@@ -7,6 +7,8 @@
 #include <iostream>
 #include <fstream>
 
+#include <stack>
+
 #include "args.hpp"
 #include "instructions.hpp"
 

@@ -16,8 +16,9 @@ void Text::UpdateBufferSize() {
 void Text::ProcessInputStream() {
     std::string word;
     std::vector<std::string> line;
-    bool note = false;
+    bool second_sl = false;
     bool process = false;
+    bool first_sl = false;
 
     int c = fgetc(input_stream);
     buffer.push_back(c);
@@ -34,20 +35,17 @@ void Text::ProcessInputStream() {
             break;
         }
         if (c == '/') {
-            if (note) {
+            if (second_sl) {
                 word.clear();
                 lines.push_back(line);
                 line.clear();
                 process = true;
-                note = false;
+                second_sl = false;
             } else {
-                note = true;
+                second_sl = true;
             }
         }
-        if (note && c != '/') {
-            note = false;
-            process = false;
-        }
+
         word += (char)c;
         if (c == '\n') {
             word.pop_back();
@@ -61,7 +59,7 @@ void Text::ProcessInputStream() {
             if (!process) {
                 lines.push_back(line);
             }
-            note = false;
+            second_sl = false;
             process = false;
             line.clear();
         } else if (c == ' ') {

@@ -70,9 +70,9 @@ void in(reg_t reg) {
 
 //0x62
 void fin() {
-    StackVal value = 0;
+    float value = 1;
     scanf("%f", &value);
-    PUSH(value);
+    PUSH(VAL(value));
 }
 
 //0x63
@@ -145,7 +145,7 @@ void fcmp(xmm_t reg1, xmm_t reg2) {
 
 //0x83
 void fcmp(xmm_t reg1, ftnum_t num2) {
-    ftnum_t num1 = r[reg1];
+    ftnum_t num1 = xmm[reg1];
     num1 -= num2;
     ZF = 0;
     SF = 0;
@@ -257,14 +257,14 @@ void jmp(label_t pos) {
 //0x91
 void jz(label_t pos) {
   if (ZF == 1) {
-      pc = pos;
+      pc = pos - 1;
   }
 }
 
 //0x92
 void jnz(label_t pos) {
   if (ZF == 0) {
-      pc = pos;
+      pc = pos - 1;
   }
 }
 
@@ -299,6 +299,6 @@ void jge(label_t pos) {
 //0xE0
 void call(label_t pos) {
     PUSH((num_t) pc);
-    pc = pos;
+    pc = pos - 1;
 }
 

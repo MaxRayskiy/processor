@@ -57,9 +57,9 @@ void in(struct ExecutorState& state, reg_t reg) {
 
 
 void fin(struct ExecutorState& state) {
-    StackVal value = 0;
+    float value = 1;
     scanf("%f", &value);
-    PUSH(value);
+    PUSH(VAL(value));
 }
 
 void fin(struct ExecutorState& state, xmm_t freg) {
@@ -124,7 +124,7 @@ void fcmp(struct ExecutorState& state, xmm_t reg1, xmm_t reg2) {
 }
 
 void fcmp(struct ExecutorState& state, xmm_t reg1, ftnum_t num2) {
-    ftnum_t num1 = r[reg1];
+    ftnum_t num1 = xmm[reg1];
     num1 -= num2;
     ZF = 0;
     SF = 0;
@@ -216,13 +216,13 @@ void jmp(struct ExecutorState& state, label_t pos) {
 
 void jz(struct ExecutorState& state, label_t pos) {
   if (ZF == 1) {
-      pc = pos;
+      pc = pos - 1;
   }
 }
 
 void jnz(struct ExecutorState& state, label_t pos) {
   if (ZF == 0) {
-      pc = pos;
+      pc = pos - 1;
   }
 }
 
@@ -252,6 +252,6 @@ void jge(struct ExecutorState& state, label_t pos) {
 
 void call(struct ExecutorState& state, label_t pos) {
     PUSH((num_t) pc);
-    pc = pos;
+    pc = pos - 1;
 }
 

@@ -16,8 +16,7 @@ if (!strcmp("push", current_instruction_name) && type == "n0") {
     current_instruction.instruction = 0x12;
     current_instruction.lhv = 0;
     current_instruction.rhv = 0;
-    float constf = atof(strtok(nullptr, " "));
-    current_instruction.lhv = *reinterpret_cast<uint32_t*>(&constf);
+    current_instruction.lhv = atof(strtok(nullptr, " "));
     instructions.push_back(current_instruction);
     continue;
 } if (!strcmp("push", current_instruction_name) && type == "x0") {
@@ -70,8 +69,7 @@ if (!strcmp("push", current_instruction_name) && type == "n0") {
     current_instruction.lhv = 0;
     current_instruction.rhv = 0;
     current_instruction.lhv = current_instruction.RegisterToInt(strtok(nullptr, " "));
-    float constf = atof(strtok(nullptr, " "));
-    current_instruction.rhv = *reinterpret_cast<uint32_t*>(&constf);
+    current_instruction.rhv = atof(strtok(nullptr, " "));
     instructions.push_back(current_instruction);
     continue;
 } if (!strcmp("in", current_instruction_name) && type == "00") {
@@ -149,8 +147,7 @@ if (!strcmp("push", current_instruction_name) && type == "n0") {
     current_instruction.lhv = 0;
     current_instruction.rhv = 0;
     current_instruction.lhv = current_instruction.RegisterToInt(strtok(nullptr, " "));
-    float constf = atof(strtok(nullptr, " "));
-    current_instruction.rhv = *reinterpret_cast<uint32_t*>(&constf);
+    current_instruction.rhv = atof(strtok(nullptr, " "));
     instructions.push_back(current_instruction);
     continue;
 } if (!strcmp("add", current_instruction_name) && type == "rr") {
@@ -182,8 +179,7 @@ if (!strcmp("push", current_instruction_name) && type == "n0") {
     current_instruction.lhv = 0;
     current_instruction.rhv = 0;
     current_instruction.lhv = current_instruction.RegisterToInt(strtok(nullptr, " "));
-    float constf = atof(strtok(nullptr, " "));
-    current_instruction.rhv = *reinterpret_cast<uint32_t*>(&constf);
+    current_instruction.rhv = atof(strtok(nullptr, " "));
     instructions.push_back(current_instruction);
     continue;
 } if (!strcmp("sub", current_instruction_name) && type == "rr") {
@@ -215,8 +211,7 @@ if (!strcmp("push", current_instruction_name) && type == "n0") {
     current_instruction.lhv = 0;
     current_instruction.rhv = 0;
     current_instruction.lhv = current_instruction.RegisterToInt(strtok(nullptr, " "));
-    float constf = atof(strtok(nullptr, " "));
-    current_instruction.rhv = *reinterpret_cast<uint32_t*>(&constf);
+    current_instruction.rhv = atof(strtok(nullptr, " "));
     instructions.push_back(current_instruction);
     continue;
 } if (!strcmp("mul", current_instruction_name) && type == "rr") {
@@ -248,8 +243,7 @@ if (!strcmp("push", current_instruction_name) && type == "n0") {
     current_instruction.lhv = 0;
     current_instruction.rhv = 0;
     current_instruction.lhv = current_instruction.RegisterToInt(strtok(nullptr, " "));
-    float constf = atof(strtok(nullptr, " "));
-    current_instruction.rhv = *reinterpret_cast<uint32_t*>(&constf);
+    current_instruction.rhv = atof(strtok(nullptr, " "));
     instructions.push_back(current_instruction);
     continue;
 } if (!strcmp("fdiv", current_instruction_name) && type == "xf") {
@@ -257,8 +251,7 @@ if (!strcmp("push", current_instruction_name) && type == "n0") {
     current_instruction.lhv = 0;
     current_instruction.rhv = 0;
     current_instruction.lhv = current_instruction.RegisterToInt(strtok(nullptr, " "));
-    float constf = atof(strtok(nullptr, " "));
-    current_instruction.rhv = *reinterpret_cast<uint32_t*>(&constf);
+    current_instruction.rhv = atof(strtok(nullptr, " "));
     instructions.push_back(current_instruction);
     continue;
 } if (!strcmp("fdiv", current_instruction_name) && type == "xx") {

@@ -17,10 +17,8 @@ ftreg2 = '    current_instruction.rhv = current_instruction.RegisterToInt(strtok
 const1 = '    current_instruction.lhv = atoi(strtok(nullptr, \" \"));\n'
 const2 = '    current_instruction.rhv = atoi(strtok(nullptr, \" \"));\n'
 
-constF1 = '    float constf = atof(strtok(nullptr, \" \"));\n' \
-          '    current_instruction.lhv = *reinterpret_cast<uint32_t*>(&constf);\n'
-constF2 = '    float constf = atof(strtok(nullptr, \" \"));\n' \
-          '    current_instruction.rhv = *reinterpret_cast<uint32_t*>(&constf);\n'
+constF1 = '    current_instruction.lhv = atof(strtok(nullptr, \" \"));\n'
+constF2 = '    current_instruction.rhv = atof(strtok(nullptr, \" \"));\n'
 
 label1 = '    current_instruction.lhv = labels[strtok(nullptr, \" \")];\n'
 label2 = '    current_instruction.rhv = labels[strtok(nullptr, \" \")];\n'
@@ -108,13 +106,13 @@ exec_instr_h = open('headers/executeInstructions.hpp', 'w')
 base_instruction = '{\n'
 
 label1 = '    label_t arg1 = instr.lhv;\n'
-label2 = '    label_t arg1 = instr.lhv;\n'
+label2 = '    label_t arg1 = instr.rhv;\n'
 
 num1 = '    num_t arg1 = instr.lhv;\n'
 num2 = '    num_t arg2 = instr.rhv;\n'
 
 ftnum1 = '    ftnum_t arg1 = instr.lhv;\n'
-ftnum2 = '    ftnum_t arg2 = instr.lhv;\n'
+ftnum2 = '    ftnum_t arg2 = instr.rhv;\n'
 
 reg1 = '    reg_t arg1 = instr.lhv;\n'
 reg2 = '    reg_t arg2 = instr.rhv;\n'

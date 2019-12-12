@@ -17,6 +17,7 @@ void Executor::ReadBinary(const std::string& file_name) {
 void Executor::Execute() {
   while (state.program_cnt < instructions.size()) {
     Instruction instr = instructions[state.program_cnt];
+//    std::cout << std::hex << instr.instruction << std::endl << std::dec;
 
     switch  (instr.instruction) {
 
@@ -43,10 +44,22 @@ size_t Executor::GetInstrCnt(std::FILE* file) {
   std::fseek(file, 0, SEEK_SET);
   return instr_cnt;
 }
-
+#include <stack>
 void Executor::DumpDebugInfo() {
+    debug_info.open("..//debug", std::fstream::out | std::fstream::app);
     debug_info << "pc=" << pc << "\n";
     debug_info << "flags:" << ZF << " " << SF << " " << CF << " " << OF << "\n";
+    std::stack<ExecutorState::StackVal> check_st;
+    /*while (!state.stack.empty()) {
+        auto val = state.stack.top();
+        state.stack.pop();
+        check_st.push(val);
+    }
+    while(!check_st.empty()) {
+        auto val = check_st.top();
+        check_st.pop();
+        state.stack.push(val);
+    }*/
     debug_info << "reg : ";
     for (auto reg : r) {
         debug_info << reg << " ";
@@ -57,12 +70,13 @@ void Executor::DumpDebugInfo() {
         debug_info << reg << " ";
     }
     debug_info << "\n\n";
-
+    debug_info.close();
 }
 
 Executor::Executor() {
     debug_info.open ("..//debug", std::fstream::out | std::fstream::trunc);
     debug_info << "executing...\n";
+    debug_info.close();
 }
 
 Executor::~Executor() {
