@@ -1,4 +1,4 @@
-#include <cstring>  // strchr
+#include <cstring>
 #include "src/assembler.hpp"
 
 

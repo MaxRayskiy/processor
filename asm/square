@@ -1,0 +1,63 @@
+fin
+pop xmm0  // a
+fin
+pop xmm1  // b
+fin
+pop xmm2  // c
+
+fcmp xmm0 0.
+jz zero_a
+
+fmov xmm3 xmm1 // xmm3 = b
+fmul xmm3 xmm1  // xmm3 = b^2
+push xmm3
+fmov xmm3 xmm0 // xmm3 = a
+fmul xmm3 4.
+fmul xmm3 xmm2 // xmm3 = 4ac
+pop xmm2  // xmm2 = b^2
+fsub xmm2 xmm3  // b^2-4ac
+fmov xmm3 0.
+fcmp xmm2 0.   // cmp D  0
+jl no_roots
+jz one_root
+jg two_roots
+
+no_roots:
+jmp end
+
+one_root:
+fmov xmm3 xmm1
+fmul xmm3 -1.
+fdiv xmm3 xmm0 // -b/a
+fdiv xmm3 2.  // -b/2a
+fout xmm3
+jmp end
+
+two_roots:
+fsqrt xmm2  // sqrt D
+fmov xmm3 xmm1
+fmul xmm3 -1.  // -b
+fadd xmm3 xmm2  // -b + sqrtD
+fdiv xmm3 2.
+fdiv xmm3 xmm0
+fout xmm3
+
+fmov xmm3 xmm1
+fmul xmm3 -1.
+fsub xmm3 xmm2
+fmov xmm2 2.
+fdiv xmm3 xmm2
+fdiv xmm3 xmm0
+fout xmm3
+jmp end
+
+zero_a:
+fcmp xmm1 0.
+jz end
+fmov xmm3 xmm2
+fmul xmm3 -1.
+fdiv xmm3 xmm1
+fout xmm3
+jmp end
+
+end:

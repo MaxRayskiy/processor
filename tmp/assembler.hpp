@@ -1,5 +1,4 @@
-#ifndef ASSEMBLER_HPP
-#define ASSEMBLER_HPP
+#pragma once
 
 #include <iostream>
 #include <cstdio>
@@ -42,5 +41,3 @@ class Assembly {
     template <typename String>
     void PackArg(const String& arg, int type);
 };
-
-#endif // ASSEMBLER_HPP

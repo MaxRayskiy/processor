@@ -1,5 +1,5 @@
-#ifndef DISASSEMBLER_HPP
-#define DISASSEMBLER_HPP
+
+
 
 #include <iostream> // cerr
 #include <string>
@@ -13,7 +13,3 @@
 std::string UnpackArg(uint64_t arg, int arg_type);
 
 void Disassembly(FILE* src, FILE* dest);
-
-
-#endif // DISASSEMBLER_HPP
-

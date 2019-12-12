@@ -1,12 +1,8 @@
 #include "text.hpp"
 
-Text::Text(FILE* input_stream)
-    : words_count(0)
-    , lines_count(0)
-    , input_stream(input_stream)
-{
-    UpdateBufferSize();
-}
+Text::Text()
+    : input_stream(nullptr)
+{}
 
 void Text::UpdateBufferSize() {
     assert(input_stream != nullptr);
@@ -20,75 +16,65 @@ void Text::UpdateBufferSize() {
 void Text::ProcessInputStream() {
     std::string word;
     std::vector<std::string> line;
+    bool second_sl = false;
+    bool process = false;
+    bool first_sl = false;
 
     int c = fgetc(input_stream);
+    buffer.push_back(c);
     assert(c != -1);
-    while (c != EOF) {
-        buffer.push_back(c);
-        if (c == '\n') {
+    while (true) {
+        if (c == EOF) {
+            if (word.empty()) {
+                continue;
+            }
             line.push_back(word);
             word.erase();
             lines.push_back(line);
             line.clear();
-            ++words_count;
-            ++lines_count;
-        } else if (c == ' ') {
+            break;
+        }
+        if (c == '/') {
+            if (second_sl) {
+                word.clear();
+                lines.push_back(line);
+                line.clear();
+                process = true;
+                second_sl = false;
+            } else {
+                second_sl = true;
+            }
+        }
+
+        word += (char)c;
+        if (c == '\n') {
+            word.pop_back();
+            if (word.empty()) {
+                c = fgetc(input_stream);
+                buffer.push_back(c);
+                continue;
+            }
             line.push_back(word);
             word.erase();
-            ++words_count;
+            if (!process) {
+                lines.push_back(line);
+            }
+            second_sl = false;
+            process = false;
+            line.clear();
+        } else if (c == ' ') {
+            word.pop_back();
+            if (word.empty()) {
+                c = fgetc(input_stream);
+                buffer.push_back(c);
+                continue;
+            }
+            line.push_back(word);
+            word.erase();
         }
         c = fgetc(input_stream);
+        buffer.push_back(c);
     }
-    //FormatBufferAndCount();
-}
-
-static inline
-void UpdateCount(int& cur_length, size_t& count) {
-    if (cur_length != 0) {  // Do not count if empty.
-        ++count;
-        cur_length = 0;
-    }
-}
-
-void Text::FormatBufferAndCount() {
-    bool freeze = false;
-    int cur_line_length = 0;
-    int cur_word_length = 0;
-
-    for (int pos = 0; pos < buffer_size; ++pos) {
-        // If see comment, freeze counters until \n.
-        if (buffer[pos] == '#') {
-            UpdateCount(cur_line_length, lines_count);
-            UpdateCount(cur_word_length, words_count);
-            freeze = true;
-        } else
-        if (buffer[pos] == '\n') {
-            freeze = false;
-        }
-
-        if (!freeze) {
-            // Count.
-            if ((buffer[pos] == ' ' || buffer[pos] == '\n')) {
-                UpdateCount(cur_word_length, words_count);
-            } else {
-                ++cur_word_length;
-            }
-            if (buffer[pos] == '\n') {
-                UpdateCount(cur_line_length, lines_count);
-            } else {
-                ++cur_line_length;
-            }
-            // Format.
-            if (buffer[pos] == '\n') {
-                buffer[pos] = '\0';
-            }
-        } else {
-            buffer[pos] = '\0';
-        }
-    }
-
-    UpdateCount(cur_word_length, words_count);
-    UpdateCount(cur_line_length, lines_count);
 }
 
 std::vector<std::string>
@@ -144,15 +130,19 @@ void Text::FillLines() {
 
         size_t length = current - line_start;
         if (length != 0) {
-            std::vector<std::string_view> words = GetWords(line_start, length);
+            std::vector<std::string> words = GetWords(line_start, length);
             if (words.size() != 0) {
                 lines[cur_line_num++] = std::move(words);
             } else {
-                --lines_count;
                 lines.pop_back();
             }
         }
     }
 }
 
+void Text::AddInputStream(const std::string& file_name) {
+  input_stream = std::fopen(file_name.data(),  "r");
+  assert(input_stream != nullptr);
+
+}
 
