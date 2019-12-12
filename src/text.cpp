@@ -16,8 +16,11 @@ void Text::UpdateBufferSize() {
 void Text::ProcessInputStream() {
     std::string word;
     std::vector<std::string> line;
+    bool note = false;
+    bool process = false;
 
     int c = fgetc(input_stream);
+    buffer.push_back(c);
     assert(c != -1);
     while (true) {
         if (c == EOF) {
@@ -30,28 +33,49 @@ void Text::ProcessInputStream() {
             line.clear();
             break;
         }
+        if (c == '/') {
+            if (note) {
+                word.clear();
+                lines.push_back(line);
+                line.clear();
+                process = true;
+                note = false;
+            } else {
+                note = true;
+            }
+        }
+        if (note && c != '/') {
+            note = false;
+            process = false;
+        }
         word += (char)c;
-        buffer.push_back(c);
         if (c == '\n') {
             word.pop_back();
             if (word.empty()) {
                 c = fgetc(input_stream);
+                buffer.push_back(c);
                 continue;
             }
             line.push_back(word);
             word.erase();
-            lines.push_back(line);
+            if (!process) {
+                lines.push_back(line);
+            }
+            note = false;
+            process = false;
             line.clear();
         } else if (c == ' ') {
             word.pop_back();
             if (word.empty()) {
                 c = fgetc(input_stream);
+                buffer.push_back(c);
                 continue;
             }
             line.push_back(word);
             word.erase();
         }
         c = fgetc(input_stream);
+        buffer.push_back(c);
     }
 }
 

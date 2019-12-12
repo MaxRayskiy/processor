@@ -9,7 +9,7 @@ typedef ftnum_t StackVal;
 #define TOFLOAT(x) reinterpret_cast<const float&>(x)
 #define VAL(x) ExecutorState::StackValue(x)
 #define ITOP() state.stack.top().int_val
-#define FTOP state.stack.top().float_val
+#define FTOP() state.stack.top().float_val
 #define PUSH(x) state.stack.push(ExecutorState::StackVal(x))
 #define POP state.stack.pop
 #define pc state.program_cnt

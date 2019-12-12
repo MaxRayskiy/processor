@@ -3,7 +3,10 @@ project(processor)
 
 set(CMAKE_CXX_STANDARD 14)
 
-execute_process(COMMAND python3 ${CMAKE_CURRENT_SOURCE_DIR}/command_gen2.py ${CMAKE_CURRENT_SOURCE_DIR})
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+include_directories(stack)
+
+execute_process(COMMAND python3 ${CMAKE_CURRENT_SOURCE_DIR}/instructions_handler.py ${CMAKE_CURRENT_SOURCE_DIR})
 
 include_directories(headers)
 

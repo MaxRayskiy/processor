@@ -1,9 +1,8 @@
 #include <vector>
+#include <iostream>
 
+#include "args.hpp"
 #include "compiler.hpp"
-
-#include<iostream>
-
 
 void Compiler::SetSource(const std::string& file_name) {
     labels.clear();
@@ -18,7 +17,6 @@ void Compiler::SetExecutable(const std::string& executable) {
 }
 
 void Compiler::Compile() {
-    std::cout << "compiling" << std::endl;
     if (source_name.empty()) {
         return;
     }
@@ -40,7 +38,7 @@ void Compiler::Compile() {
         char* current_instruction_name = strtok(non_constant_string, " ");
         Instruction current_instruction = {0, 0};
         std::string type = GetArgsType(source.GetLine(i));
-        std::cout << current_instruction_name << " " << type << std::endl;
+        //std::cout << current_instruction_name << " " << type << std::endl;
         #include "CompileInstructions.hpp"
 
         assert(false);
@@ -63,26 +61,32 @@ std::string Compiler::GetArgsType(std::vector<std::string> splited_lines) {
     bool new_s = true;
     if(splited_lines.size() == 2) {
         std::string word = splited_lines[1];
-        if ((word[0] == 'e' && word[2] == 'x') || (word[0] == 'E' && word[2] == 'x')) {
+        if (IsRegArg(word)) {
             return "r0";
-        } else if ((word[0] == 'x' && word[1] == 'm' && word[2] == 'm') || word[0] == 'X') {
+        } else if (IsFtregArg(word)) {
             return "x0";
-        } else if (labels.find(word) != labels.end()){
+        } else if (labels.find(word) != labels.end()) {
             return "l0";
-        } else {
+        } else if (IsNumArg(word)) {
             return "n0";
+        } else if (IsFtnumArg(word)) {
+            return "f0";
         }
     } else if(splited_lines.size() == 3) {
         std::string res;
         for (auto word: splited_lines) {
-            if (word[0] == 'e' || word[0] == 'E') {
+            if (IsRegArg(word)) {
                 res.push_back('r');
-            } else if (word[0] == 'x' || word[0] == 'X') {
+            } else if (IsFtregArg(word)) {
                 res.push_back('x');
             } else if (labels.find(word) != labels.end()) {
                 res.push_back('l');
-            } else {
+            } else if (IsNumArg(word)) {
                 res.push_back('n');
+            } else if (IsFtnumArg(word)) {
+                res.push_back('f');
+            } else {
+                assert(new_s || false);
             }
             if (new_s) {
                 new_s = false;

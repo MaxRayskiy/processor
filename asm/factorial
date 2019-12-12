@@ -1,14 +1,13 @@
 in
-pop edx
-mov eax 1
-mov ebx 1
-mov ecx 1
+pop edx  // num
+mov eax 1  // result
+mov ecx 1  // cnt
 
 factorial:
 cmp ecx edx
 jg end
 mul eax ecx
-add ecx ebx
+add ecx 1
 jmp factorial
 
 end:

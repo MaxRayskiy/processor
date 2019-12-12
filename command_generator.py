@@ -11,6 +11,9 @@ base_instruction = 'if (!strcmp("{instr_name}", current_instruction_name) && typ
 reg1 = '    current_instruction.lhv = current_instruction.RegisterToInt(strtok(nullptr, \" \"));\n'
 reg2 = '    current_instruction.rhv = current_instruction.RegisterToInt(strtok(nullptr, \" \"));\n'
 
+ftreg1 = '    current_instruction.lhv = current_instruction.RegisterToInt(strtok(nullptr, \" \"));\n'
+ftreg2 = '    current_instruction.rhv = current_instruction.RegisterToInt(strtok(nullptr, \" \"));\n'
+
 const1 = '    current_instruction.lhv = atoi(strtok(nullptr, \" \"));\n'
 const2 = '    current_instruction.rhv = atoi(strtok(nullptr, \" \"));\n'
 
@@ -66,8 +69,10 @@ for line in instructions:
     current_instruction = base_instruction
 
     if arg1_t != '0':
-        if arg1_t == 'reg_t' or arg1_t == 'ftreg_t':
+        if arg1_t == 'reg_t':
             current_instruction += reg1
+        elif arg1_t == 'xmm_t':
+            current_instruction += ftreg1
         elif arg1_t == 'num_t':
             current_instruction += const1
         elif arg1_t == 'ftnum_t':
@@ -76,8 +81,10 @@ for line in instructions:
             current_instruction += label1
 
     if arg2_t != '0':
-        if arg2_t == 'reg_t' or arg2_t == 'ftreg_t':
+        if arg2_t == 'reg_t':
             current_instruction += reg2
+        elif arg2_t == 'xmm_t':
+            current_instruction += ftreg2
         elif arg2_t == 'num_t':
             current_instruction += const2
         elif arg2_t == 'ftnum_t':
@@ -112,8 +119,8 @@ ftnum2 = '    ftnum_t arg2 = instr.lhv;\n'
 reg1 = '    reg_t arg1 = instr.lhv;\n'
 reg2 = '    reg_t arg2 = instr.rhv;\n'
 
-ftreg1 = '    ftreg_t arg1 = instr.lhv;\n'
-ftreg2 = '    ftreg_t arg2 = instr.rhv;\n'
+ftreg1 = '    xmm_t arg1 = instr.lhv;\n'
+ftreg2 = '    xmm_t arg2 = instr.rhv;\n'
 
 current_instruction = base_instruction
 instr_num = 0
@@ -155,7 +162,7 @@ for line in instructions:
         if arg1_t != '0':
             if arg1_t == 'reg_t':
                 current_instruction += reg1
-            elif arg1_t == 'ftreg_t':
+            elif arg1_t == 'xmm_t':
                 current_instruction += ftreg1
             elif arg1_t == 'num_t':
                 current_instruction += num1
@@ -166,8 +173,8 @@ for line in instructions:
 
         if arg2_t != '0':
             if arg2_t == 'reg_t':
-                current_instruction +=reg2
-            elif arg2_t == 'ftreg_t':
+                current_instruction += reg2
+            elif arg2_t == 'xmm_t':
                 current_instruction += ftreg2
             elif arg2_t == 'num_t':
                 current_instruction += num2

@@ -8,8 +8,23 @@ case 0x11: {
     push(state, arg1);
     break;
 }
+case 0x12: {
+    ftnum_t arg1 = instr.lhv;
+    push(state, arg1);
+    break;
+}
+case 0x13: {
+    xmm_t arg1 = instr.lhv;
+    push(state, arg1);
+    break;
+}
 case 0x20: {
     reg_t arg1 = instr.lhv;
+    pop(state, arg1);
+    break;
+}
+case 0x21: {
+    xmm_t arg1 = instr.lhv;
     pop(state, arg1);
     break;
 }
@@ -26,13 +41,13 @@ case 0x31: {
     break;
 }
 case 0x32: {
-    ftreg_t arg1 = instr.lhv;
-    ftreg_t arg2 = instr.rhv;
+    xmm_t arg1 = instr.lhv;
+    xmm_t arg2 = instr.rhv;
     fmov(state, arg1, arg2);
     break;
 }
 case 0x33: {
-    ftreg_t arg1 = instr.lhv;
+    xmm_t arg1 = instr.lhv;
     ftnum_t arg2 = instr.lhv;
     fmov(state, arg1, arg2);
     break;
@@ -47,7 +62,11 @@ case 0x61: {
     break;
 }
 case 0x62: {
-    ftreg_t arg1 = instr.lhv;
+    fin(state);
+    break;
+}
+case 0x63: {
+    xmm_t arg1 = instr.lhv;
     fin(state, arg1);
     break;
 }
@@ -61,7 +80,7 @@ case 0x71: {
     break;
 }
 case 0x72: {
-    ftreg_t arg1 = instr.lhv;
+    xmm_t arg1 = instr.lhv;
     fout(state, arg1);
     break;
 }
@@ -72,8 +91,20 @@ case 0x80: {
     break;
 }
 case 0x81: {
-    ftreg_t arg1 = instr.lhv;
-    ftreg_t arg2 = instr.rhv;
+    reg_t arg1 = instr.lhv;
+    num_t arg2 = instr.rhv;
+    cmp(state, arg1, arg2);
+    break;
+}
+case 0x82: {
+    xmm_t arg1 = instr.lhv;
+    xmm_t arg2 = instr.rhv;
+    fcmp(state, arg1, arg2);
+    break;
+}
+case 0x83: {
+    xmm_t arg1 = instr.lhv;
+    ftnum_t arg2 = instr.lhv;
     fcmp(state, arg1, arg2);
     break;
 }
@@ -90,13 +121,13 @@ case 0x41: {
     break;
 }
 case 0x42: {
-    ftreg_t arg1 = instr.lhv;
-    ftreg_t arg2 = instr.rhv;
+    xmm_t arg1 = instr.lhv;
+    xmm_t arg2 = instr.rhv;
     fadd(state, arg1, arg2);
     break;
 }
 case 0x43: {
-    ftreg_t arg1 = instr.lhv;
+    xmm_t arg1 = instr.lhv;
     ftnum_t arg2 = instr.lhv;
     fadd(state, arg1, arg2);
     break;
@@ -114,13 +145,13 @@ case 0xA1: {
     break;
 }
 case 0xA2: {
-    ftreg_t arg1 = instr.lhv;
-    ftreg_t arg2 = instr.rhv;
+    xmm_t arg1 = instr.lhv;
+    xmm_t arg2 = instr.rhv;
     fsub(state, arg1, arg2);
     break;
 }
 case 0xA3: {
-    ftreg_t arg1 = instr.lhv;
+    xmm_t arg1 = instr.lhv;
     ftnum_t arg2 = instr.lhv;
     fsub(state, arg1, arg2);
     break;
@@ -138,31 +169,31 @@ case 0x51: {
     break;
 }
 case 0x52: {
-    ftreg_t arg1 = instr.lhv;
-    ftreg_t arg2 = instr.rhv;
+    xmm_t arg1 = instr.lhv;
+    xmm_t arg2 = instr.rhv;
     fmul(state, arg1, arg2);
     break;
 }
 case 0x53: {
-    ftreg_t arg1 = instr.lhv;
+    xmm_t arg1 = instr.lhv;
     ftnum_t arg2 = instr.lhv;
     fmul(state, arg1, arg2);
     break;
 }
 case 0xC1: {
-    ftreg_t arg1 = instr.lhv;
+    xmm_t arg1 = instr.lhv;
     ftnum_t arg2 = instr.lhv;
     fdiv(state, arg1, arg2);
     break;
 }
 case 0xC2: {
-    ftreg_t arg1 = instr.lhv;
-    ftreg_t arg2 = instr.rhv;
+    xmm_t arg1 = instr.lhv;
+    xmm_t arg2 = instr.rhv;
     fdiv(state, arg1, arg2);
     break;
 }
 case 0xD3: {
-    ftreg_t arg1 = instr.lhv;
+    xmm_t arg1 = instr.lhv;
     fsqrt(state, arg1);
     break;
 }
@@ -172,12 +203,12 @@ case 0xD1: {
     break;
 }
 case 0xD0: {
-    ftreg_t arg1 = instr.lhv;
+    xmm_t arg1 = instr.lhv;
     flnot(state, arg1);
     break;
 }
 case 0xD2: {
-    ftreg_t arg1 = instr.lhv;
+    xmm_t arg1 = instr.lhv;
     finf(state, arg1);
     break;
 }

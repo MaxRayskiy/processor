@@ -2,8 +2,10 @@
 
 #include <vector>
 #include <cstdint>
-#include <stack>
+#include "stack.hpp"
 #include <string>
+#include <iostream>
+#include <fstream>
 
 #include "args.hpp"
 #include "instructions.hpp"
@@ -23,17 +25,26 @@ struct ExecutorState {
     explicit StackVal(const ftnum_t& float_val) : float_val(float_val) {}
     explicit StackVal(const num_t& int_val) : int_val(int_val) {}
   };
-  std::stack<StackVal> stack;
+  DynamicStack<StackVal> stack;
 };
+
+static bool operator==(ExecutorState::StackVal lhs, ExecutorState::StackVal rhs) {
+    return lhs.float_val == rhs.float_val;
+}
 
 class Executor {
  public:
-    Executor() = default;
+    Executor();
+    ~Executor();
+
     void ReadBinary(const std::string& file_name = "..//a.out");
     void Execute();
 
  private:
+    std::fstream debug_info;
     size_t GetInstrCnt(std::FILE* file);
+    void DumpDebugInfo();
+    void DumpError();
     ExecutorState state;
     std::vector<Instruction> instructions;
 };
