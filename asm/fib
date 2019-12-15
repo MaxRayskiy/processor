@@ -1,0 +1,13 @@
+in  // N
+push 1
+push
+jmp fib
+
+fib_first:
+pop edx
+pop ecx
+pop ebx
+
+fib:
+cmp
+

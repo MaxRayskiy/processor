@@ -37,9 +37,11 @@ void Compiler::Compile() {
         char* non_constant_string = const_cast<char*>(source.Line(i).data());
         char* current_instruction_name = strtok(non_constant_string, " ");
         Instruction current_instruction = {0, 0};
-//        std::cout << current_instruction_name <<std::endl;
         std::string type = GetArgsType(source.GetLine(i));
-        #include "CompileInstructions.hpp"
+        std::cout << current_instruction_name << " " <<type <<std::endl;
+
+
+    #include "CompiledInstructions.hpp"
 
         assert(false);
     }

@@ -1,7 +1,7 @@
-#include "executor.hpp"
 #include <cassert>
 #include <iostream>
 
+#include "executor.hpp"
 #include "final_commands.hpp"
 
 
@@ -17,7 +17,6 @@ void Executor::ReadBinary(const std::string& file_name) {
 void Executor::Execute() {
   while (state.program_cnt < instructions.size()) {
     Instruction instr = instructions[state.program_cnt];
-//    std::cout << std::hex << instr.instruction << std::endl << std::dec;
 
     switch  (instr.instruction) {
 
@@ -26,13 +25,6 @@ void Executor::Execute() {
         default: assert(false);
     }
     DumpDebugInfo();
-      /*std::cout << state.program_cnt << std::endl;
-      std::cout << std::hex << instr.instruction << ": " << std::dec;
-      for (num_t reg : state.int_reg) {
-          std::cout << reg << " ";
-      }
-      std::cout << std::endl;
-*/
     ++state.program_cnt;
   }
 }
@@ -48,18 +40,9 @@ size_t Executor::GetInstrCnt(std::FILE* file) {
 void Executor::DumpDebugInfo() {
     debug_info.open("..//debug", std::fstream::out | std::fstream::app);
     debug_info << "pc=" << pc << "\n";
+    debug_info << instructions[pc].instruction << "\n";
     debug_info << "flags:" << ZF << " " << SF << " " << CF << " " << OF << "\n";
     std::stack<ExecutorState::StackVal> check_st;
-    /*while (!state.stack.empty()) {
-        auto val = state.stack.top();
-        state.stack.pop();
-        check_st.push(val);
-    }
-    while(!check_st.empty()) {
-        auto val = check_st.top();
-        check_st.pop();
-        state.stack.push(val);
-    }*/
     debug_info << "reg : ";
     for (auto reg : r) {
         debug_info << reg << " ";
@@ -68,6 +51,17 @@ void Executor::DumpDebugInfo() {
     debug_info << "xmm : ";
     for (auto reg : xmm) {
         debug_info << reg << " ";
+    }
+    debug_info << "\nstack:";
+    StaticStack<ExecutorState::StackVal> alt;
+    while (!state.stack.empty()) {
+        alt.push(state.stack.top());
+        state.stack.pop();
+    }
+    while (!alt.empty()) {
+        state.stack.push(alt.top());
+        debug_info << alt.top().int_val << " ";
+        alt.pop();
     }
     debug_info << "\n\n";
     debug_info.close();

@@ -18,7 +18,6 @@ void Text::ProcessInputStream() {
     std::vector<std::string> line;
     bool second_sl = false;
     bool process = false;
-    bool first_sl = false;
 
     int c = fgetc(input_stream);
     buffer.push_back(c);
@@ -52,7 +51,7 @@ void Text::ProcessInputStream() {
             if (word.empty()) {
                 c = fgetc(input_stream);
                 buffer.push_back(c);
-                continue;
+                 continue;
             }
             line.push_back(word);
             word.erase();

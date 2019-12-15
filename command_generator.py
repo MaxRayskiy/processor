@@ -1,7 +1,7 @@
 import sys
 
 instructions = open('headers/commands.inl', 'r')
-compile_instructions_header = open('headers/CompileInstructions.hpp', 'w')
+compile_instructions_header = open('headers/CompiledInstructions.hpp', 'w')
 
 base_instruction = 'if (!strcmp("{instr_name}", current_instruction_name) && type == "{instr_type}") {{\n' \
                    '    current_instruction.instruction = {opcode};\n' \

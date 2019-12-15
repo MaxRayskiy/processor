@@ -4,7 +4,7 @@
 
 int main() {
   Compiler compiler;
-  compiler.SetSource("..//asm/factorial");
+  compiler.SetSource("..//asm/square");
   compiler.SetExecutable();
   compiler.Compile();
   compiler.WriteBinary();

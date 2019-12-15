@@ -346,11 +346,16 @@ if (!strcmp("push", current_instruction_name) && type == "n0") {
     current_instruction.lhv = labels[strtok(nullptr, " ")];
     instructions.push_back(current_instruction);
     continue;
-} if (!strcmp("call", current_instruction_name) && type == "l0") {
+} if (!strcmp("ret", current_instruction_name) && type == "00") {
+    current_instruction.instruction = 0xED;
+    current_instruction.lhv = 0;
+    current_instruction.rhv = 0;
+    instructions.push_back(current_instruction);
+    continue;
+} if (!strcmp("ret", current_instruction_name) && type == "00") {
     current_instruction.instruction = 0;
     current_instruction.lhv = 0;
     current_instruction.rhv = 0;
-    current_instruction.lhv = labels[strtok(nullptr, " ")];
     instructions.push_back(current_instruction);
     continue;
 } 

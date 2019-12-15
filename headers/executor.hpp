@@ -14,7 +14,7 @@
 
 struct ExecutorState {
   ExecutorState() = default;
-  size_t program_cnt = 0;
+  label_t program_cnt = 0;
   bool ZF = false;
   bool SF = false;
   bool CF = false;
@@ -24,8 +24,10 @@ struct ExecutorState {
   union StackVal {
     num_t int_val;
     ftnum_t float_val;
+    label_t label_val;
     explicit StackVal(const ftnum_t& float_val) : float_val(float_val) {}
     explicit StackVal(const num_t& int_val) : int_val(int_val) {}
+    explicit StackVal(const label_t& label_val) : label_val(label_val) {}
   };
   DynamicStack<StackVal> stack;
 };

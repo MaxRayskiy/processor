@@ -252,3 +252,7 @@ case 0xE0: {
     call(state, arg1);
     break;
 }
+case 0xED: {
+    ret(state);
+    break;
+}

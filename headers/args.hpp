@@ -6,10 +6,10 @@
 
 
 typedef uint8_t reg_t;
-typedef int8_t  xmm_t;
-typedef int64_t num_t;
+typedef int64_t  xmm_t;
+typedef int32_t num_t;
 typedef double  ftnum_t;
-typedef int32_t label_t;
+typedef size_t label_t;
 
 static bool IsNumArg(const std::string& word) {
   for (char letter : word) {

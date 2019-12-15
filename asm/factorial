@@ -1,15 +1,36 @@
 in
-pop edx  // num
-mov eax 1  // result
-mov ecx 1  // cnt
+
+call factorial
+jmp return
+
+stop_rec:
+push 1
+pop eax
+ret
 
 factorial:
-cmp ecx edx
-jg end
+pop edx // pc
+pop ecx  // cnt
+mov ebx ecx
+push ecx
+push edx
+cmp ebx 1
+jle stop_rec
+pop edx
+pop ecx
+mov ebx ecx
+sub ebx 1
+push edx  //pc
+push ecx
+push ebx
+call factorial
+pop eax
+pop ecx
 mul eax ecx
-add ecx 1
-jmp factorial
-
-end:
+pop ebx
 push eax
+push ebx
+ret
+
+return:
 out

@@ -26,7 +26,7 @@ static std::unordered_map<std::string, uint8_t> map_f = {{"xmm0", 0},
                                                          {"xmm7", 7}};
 
 struct Instruction {
-  uint32_t instruction;
+  uint8_t instruction;
   int64_t lhv;
   int64_t rhv;
 
@@ -37,6 +37,7 @@ struct Instruction {
           return map_f[reg_name];
       }
       assert(false);
+      return -1;
   }
 
 };

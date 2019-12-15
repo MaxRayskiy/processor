@@ -10,18 +10,17 @@ execute_process(COMMAND python3 ${CMAKE_CURRENT_SOURCE_DIR}/instructions_handler
 
 include_directories(headers)
 
-add_executable(processor main.cpp
+add_executable(compiler compile.cpp
         headers/compiler.hpp
         src/compiler.cpp
 
                 headers/text.hpp
                 headers/args.hpp
-                headers/executor.hpp
-                #headers/final_commands.hpp
-                #headers/executeInstructions.hpp
-                #headers/instructions.hpp
+                #headers/executor.hpp
+
                 headers/instructionsDefines.h
 
-                src/text.cpp
-                src/executor.cpp)
+                src/text.cpp)
+
+add_executable(executor execute.cpp headers/executor.hpp src/executor.cpp headers/instructionsDefines.h)
 
